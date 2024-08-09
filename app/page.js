@@ -67,18 +67,13 @@ export default function Home() {
     await updateInventory();
   };
 
-  const removeItem = async (item) => {
-    const docRef = doc(collection(firestore, "inventory"), item);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const { quantity } = docSnap.data();
-      if (quantity === 1) {
-        await deleteDoc(docRef);
-      } else {
-        await setDoc(docRef, { quantity: quantity - 1 });
+    const removeItem = async (item) => {
+      const docRef = doc(collection(firestore, "inventory"), item);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+          await deleteDoc(docRef);
       }
-    }
-    await updateInventory();
+      await updateInventory();
   };
 
   const handleOpen = () => setOpen(true);
